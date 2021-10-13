@@ -1,8 +1,9 @@
 
 "
-Author: Pedro Gonzalez
+Author: Pedro González-Espinosa
 Date: April 8th 2021
 University of British Columbia
+Geography Department
 "
 
 ################# ================== ###################
