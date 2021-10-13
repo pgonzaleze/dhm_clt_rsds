@@ -24,7 +24,7 @@ library(dplyr)
 
 hdp <- read.csv("df_sst_clouds_rsds_mon_t.csv", sep = ";") # may use ', sep = ";"' 
 
-#hdp <- subset(hdp, SEVERITY_CODE >= 0)
+hdp <- subset(hdp, SEVERITY_CODE >= 0)
 
 # perform a simple lm
 basic.lm <- lm(SEVERITY_CODE ~ DHM * CF_a_monmean, data = hdp)
@@ -46,11 +46,6 @@ l <- lmer(SEVERITY_CODE ~ DHM +
 summary(m)
 
 AICc(m, n, l)
-
-# logit lmer
-log <- glmer(severity_bin ~ DHM * CLTa +
-               (1 | lat), data = hdp, family = binomial)
-summary(log)
 
 # plot estimates
 theme_set(theme_sjplot2())
