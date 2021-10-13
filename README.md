@@ -1,4 +1,4 @@
-# dhm_clt_rsds
+# Cloudiness delays projected impact of climate change on coral reefs
 Repository with data regarding the paper "Cloudiness delays projected impact of climate change on coral reefs"
 + The coral bleaching database is available at https://www.simondonner.com/bleachingdatabase
 + The NOAA Coral Reef Watch CoralTemp Version 3.1 Daily Global 5 km is publicly available at https://coralreefwatch.noaa.gov/product/5km/index.php 
