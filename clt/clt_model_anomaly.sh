@@ -1,6 +1,7 @@
 #!/bin/bash
 # Compute the modeled cloud anomaly 
 # Compute climatology for the period 1985-2004 
+
 for file in GFDL-ESM4_ssp126_clt_Omon_Bcor.nc
 do
 echo i$
