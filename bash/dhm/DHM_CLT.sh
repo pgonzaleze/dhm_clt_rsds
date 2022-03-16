@@ -31,7 +31,7 @@ cdo expr,'severity_blx=(0.730+(0.7796*tos)+(-0.00310*clt)+(0.002662*(tos*clt)));
 export CDO_TIMESTAT_DATE=last
 cdo yearmax GFDL-ESM4_ssp126_DHM_clt_lmer.nc GFDL-ESM4_ssp126_DHMmax.nc
 
-# Mask as "1" the severity values greater than 2.6 DHM´s
+# Mask as "1" the severity values greater than 2.5 DHM´s
 cdo gec,2.5 GFDL-ESM4_ssp126_DHMmax.nc GFDL-ESM4_ssp126_DHMmax_gtc2.nc
 
 # Compute the frequency of DHM gt 2 per 11 years; e.g. for 2025 count freq of 2020-2030
@@ -40,12 +40,6 @@ cdo runsum,11 GFDL-ESM4_ssp126_DHMmax_gtc2.nc GFDL-ESM4_ssp126_DHMmax_gtc2_frequ
 
 # Divide the frequency by 11 (the running 11 year period)
 cdo expr,'freq=severity_blx/11;' GFDL-ESM4_ssp126_DHMmax_gtc2_frequency.nc GFDL-ESM4_ssp126_DHMmax_gtc2_decadal_frequency.nc
-
-# # Bring the mask grid to the data grid and set the mask value to 1
-# cdo -setvals,0,1 -remapcon,GFDL-ESM4_ssp126_DHMmax_gtc2_decadal_frequency.nc WCMC_reef_cells_1.nc reef_mask.nc
-
-# # multiply the data and the mask to cut out the region if interest
-# cdo mul GFDL-ESM4_ssp126_DHMmax_gtc2_decadal_frequency.nc reef_mask.nc GFDL-ESM4_ssp126_DHMmax_gtc2_decadal_frequency_reefs.nc 
 
 # Mask as "1" the Frequency values greater than 0.2
 cdo gec,0.2 GFDL-ESM4_ssp126_DHMmax_gtc2_decadal_frequency.nc GFDL-ESM4_ssp126_DHMmax_gtc2_decadal_frequency_reefs_mask.nc

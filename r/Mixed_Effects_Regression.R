@@ -23,12 +23,12 @@ library(dplyr)
 
 # Load the database
 
-hdp <- read.csv("df_sst_clouds_rsds_mon_t.csv", sep = ";") # may use ', sep = ";"' 
+hdp <- read.csv("df_sst_clouds_rsds_mon_t.csv", sep = ",") # may use ', sep = ";"' 
 
 hdp <- subset(hdp, SEVERITY_CODE >= 0)
 
 # perform a simple lm
-basic.lm <- lm(SEVERITY_CODE ~ DHM * CF_a_monmean, data = hdp)
+basic.lm <- lm(SEVERITY_CODE ~ DHM, data = hdp)
 summary(basic.lm)
 #plot qq plot
 plot(basic.lm, which = 2)
@@ -38,15 +38,32 @@ plot(basic.lm, which = 2)
 ########## =============== ########## 
 
 # lmer 
-m <- lmer(SEVERITY_CODE ~ DHM * CLT2017+
-            (1 | lat), REML = F, data = hdp)
-n <- lmer(SEVERITY_CODE ~ DHM * RSDS+
-            (1 | lat), REML = F, data = hdp)
+e <- lmer(SEVERITY_CODE ~ DHM +
+            (1| lat), REML = F, data = hdp)
+f <- lmer(SEVERITY_CODE ~ DHM * CLTa +
+            (1| lat), REML = F, data = hdp)
+g <- lmer(SEVERITY_CODE ~ DHM * RSDSa +
+            (1| lat), REML = F, data = hdp)
+h <- lmer(SEVERITY_CODE ~ DHM +
+            (1| lon), REML = F, data = hdp)
+j <- lmer(SEVERITY_CODE ~ DHM * CLTa +
+            (1| lon), REML = F, data = hdp)
+k <- lmer(SEVERITY_CODE ~ DHM * RSDSa +
+            (1| lon), REML = F, data = hdp)
 l <- lmer(SEVERITY_CODE ~ DHM +
-            (1 | lat), REML = F, data = hdp)
-summary(m)
+            (1 | lat) + (1| lon), REML = F, data = hdp)
+m <- lmer(SEVERITY_CODE ~ DHM * CLTa +
+            (1 | lat) + (1| lon), REML = F, data = hdp)
+n <- lmer(SEVERITY_CODE ~ DHM * RSDSa +
+            (1 | lat) + (1| lon), REML = F, data = hdp)
+mixed_models <- c(e,f,g,h,j,k,l,m,n)
+for (i in mixed_models){
+  print(summary(i))
+}
+  
+summary(h)
 
-AICc(m, n, l)
+AICc(e, f, g, h, j, k, l, m, n)
 
 # plot estimates
 theme_set(theme_sjplot2())
@@ -67,7 +84,7 @@ stargazer(m, type = "text",
           star.cutoffs = c(0.05, 0.01, 0.001),
           digit.separator = "")
 
-# to get the r2; will returns the marginal and the conditional R�
+# to get the r2; will returns the marginal and the conditional Rsq
 r.squaredGLMM(m)
 
 # To extract the residuals (errors) and summarize them, 
